@@ -5,6 +5,28 @@ description: Create, list, and read persistent Markdown sessions in the currentl
 
 # Project workspace sessions and desktop remote control
 
+## Check the desktop project first
+
+When a task may involve the desktop, make a read-only readiness check before any
+project-sensitive desktop operation. With Node.js available, run
+`node <skill-directory>/helpers/desktop_control.mjs --project <current-project-directory>`.
+Use the host's current project directory. The helper checks the local Desktop endpoint,
+reads its current project, and rechecks it before reporting `connected`. It never switches
+projects or changes the app. `connected` describes the observed project at check time; it
+does not authenticate the endpoint or pin the project for later actions.
+
+If Node.js is unavailable, continue in text and explain that the desktop project check
+could not run; do not install Node automatically. `desktop_unavailable` means the local
+endpoint did not answer and does not prove the app is absent. For `project_required` or
+`project_mismatch`, tell the user to open the intended project in the desktop and retry.
+Keep text work useful in every status.
+
+The helper sends only `ping` and `get_current_project` requests. It does not register
+MCP tools. Existing MCP tools below are optional host capabilities; a readiness result
+does not establish that they are available, safe for the selected root, or authenticated.
+
+## Project workspace sessions
+
 Use these tools after the user asks you to create or inspect a persistent project session:
 
 - `create_session(requestId, title, initialMarkdown)` creates the session and its initial Markdown artifact.
@@ -15,7 +37,7 @@ The server is bound at process start to the desktop's canonical `AI_IN_A_SHELL_P
 
 For a create whose result is uncertain, retry with the identical `requestId`, title, and Markdown. Reusing a request ID with changed content is a conflict. Keep and reuse the returned session and artifact IDs when listing and reading.
 
-## Desktop Remote Control Tools (TCP Port 4143)
+## Existing optional Desktop Remote Control Tools (TCP Port 4143)
 
 The MCP server exposes tools to interactively control the running AI in a Shell desktop application via its TCP control server (`127.0.0.1:4143`):
 

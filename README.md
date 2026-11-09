@@ -2,6 +2,8 @@
 
 This is a small developer pilot for Apple Silicon Macs. The [public repository](https://github.com/XamHans/ai-in-a-shell) contains the installable skill and the [desktop pilot release](https://github.com/XamHans/ai-in-a-shell/releases/tag/v0.1.0-pilot.1).
 
+The skill package is updated separately from the desktop app. The current skill release is `v0.1.0-pilot.2`; the desktop download remains `v0.1.0-pilot.1`.
+
 ## Requirements
 
 - Node.js 22.20 or newer
@@ -21,6 +23,8 @@ Open a project in Codex and invoke the skill with a concrete question, for examp
 ```text
 $ai-in-a-shell Please help me trace how this project handles user sign-in.
 ```
+
+For desktop work, open the same project folder in the Desktop. If the skill reports that the Desktop is unavailable or has another project open, retry after opening that folder or continue in text.
 
 ## Download the desktop pilot
 
