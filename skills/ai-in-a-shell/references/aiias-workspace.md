@@ -5,10 +5,24 @@ description: Create, list, and read persistent Markdown sessions in the currentl
 
 # Project workspace sessions and desktop remote control
 
+When the user asks to read or change Ist/Soll canvas assignments or visibility, follow the shared [comparison-axis reference](comparison-axis.md).
+
+For canvas work, use the shared [one-canvas guidance](one-canvas.md); the tool descriptions below document available operations, not a default workflow.
+
 ## Check the desktop project first
 
-When a task may involve the desktop, make a read-only readiness check before any
-project-sensitive desktop operation. With Node.js available, run
+For Ist/Soll comparison tasks, first check whether all three comparison tools are
+available: `desktop_get_comparison_state`, `desktop_set_comparison_state`, and
+`desktop_set_comparison_view`. When they are, use
+`desktop_get_comparison_state` as the authoritative readiness and live-context check;
+it is bound to the current project and validates the actual canvas and tab. Do not run
+the fixed-default-port helper first or let its result override the bound MCP result.
+Follow the [comparison-axis reference](comparison-axis.md) for reads,
+writes, and timeout handling. If the comparison tools are unsupported, say that this
+runtime does not support the comparison axis and continue in text.
+
+For other desktop control paths, when a task may involve the desktop, make a read-only
+readiness check before any project-sensitive operation. With Node.js available, run
 `node <skill-directory>/helpers/desktop_control.mjs --project <current-project-directory>`.
 Use the host's current project directory. The helper checks the local Desktop endpoint,
 reads its current project, and rechecks it before reporting `connected`. It never switches
@@ -22,8 +36,8 @@ endpoint did not answer and does not prove the app is absent. For `project_requi
 Keep text work useful in every status.
 
 The helper sends only `ping` and `get_current_project` requests. It does not register
-MCP tools. Existing MCP tools below are optional host capabilities; a readiness result
-does not establish that they are available, safe for the selected root, or authenticated.
+MCP tools. For these other desktop paths, a helper result does not establish that MCP
+tools are available, safe for the selected root, or authenticated.
 
 ## Project workspace sessions
 
